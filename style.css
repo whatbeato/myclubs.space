@@ -10,8 +10,8 @@ a {
     color: #fffef1;
 }
 
-.main-content {
-    margin-bottom: 50px
+#about, #why, #price {
+    margin-bottom: 50px;
 }
 
 .top-bar {
