@@ -1,7 +1,13 @@
-fetch("news/test.md")
-.then(res => res.text())
-.then(text => {
-    console.log(text)
-    document.body.innerHTML = text
-}
-)
+fetch(`news/${post}.md`)
+.then(res => {
+    console.log("fetch status -", res.status)
+    return res.text()
+})
+.then(md => {
+    console.log("md content:", md.slice(0, 100))
+    const html = marked.parse(md)
+    document.getElementById("content").innerHTML = html
+})
+.catch(err => {
+    console.error("fetch error :c -", err)
+})
