@@ -1,13 +1,11 @@
+const params = new URLSearchParams(window.location.search);
+const post = params.get("post") || "test";
+
 fetch(`news/${post}.md`)
-.then(res => {
-    console.log("fetch status -", res.status)
-    return res.text()
-})
+.then(res => res.text())
 .then(md => {
-    console.log("md content:", md.slice(0, 100))
-    const html = marked.parse(md)
-    document.getElementById("content").innerHTML = html
+    document.getElementById("content").innerHTML = marked.parse(md)
 })
 .catch(err => {
-    console.error("fetch error :c -", err)
+    document.getElementById("content").innerHTML = `<p>something happened when loading the post :c - ${err}</p>`
 })
