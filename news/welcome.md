@@ -5,4 +5,4 @@ if you run a hack club, i recommend you get a free subdomain from us <3, they're
 
 and if you don't run a club, what are you waiting for? sign up now!!!!
 
-- lynn <3
+-lynn <3
