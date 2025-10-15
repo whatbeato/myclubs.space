@@ -40,6 +40,10 @@ iframe {
     border-radius: 20px;
 }
 
+#card a:link {
+    color: #252525
+}
+
 #footer {
     margin-top: 65px;
     text-align: center;
