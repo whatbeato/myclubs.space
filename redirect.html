@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <title>lynn beato</title>
+</head>
+<body>
+    <div class="top-bar">
+        <h1>lynn beato</h1>
+        <div class="top-bar-right">
+            <p class="back"><strong>REDIRECT FLOW</strong></p>
+        </div>
+    </div>
+    <h2>heads up - you're leaving this website</h2>
+    <p id="message">preparing...</p>
+
+    <div id="controls">
+        <button id="proceedBtn">continue</button>
+        <button id="cancelBtn">cancel</button>
+    </div>
+
+    <p class="muted">
+        if you didn't expect this, maybe don't continue
+    </p>
+
+    <script>
+        (function () {
+            function escapeHtml(s) {
+                return String(s).replace(/[&<>"']/g, function (m) {
+                    return({'&':'&amp','<':'&lt','>':'&gt','"':'&quot',"'":'&#39;'}[m]);
+                });
+            }
+            const params = new URLSearchParams(location.search);
+            const raw = params.get("url");
+
+            const appMessage = document.getElementById("message");
+            const controls = document.getElementById("controls");
+            const proceedBtn = document.getElementById("proceedBtn");
+            const cancelBtn = document.getElementById("cancelBtn");
+
+            if (!raw) {
+                appMessage.textContent = "error: no destination specified :c";
+                controls.style.display = "none";
+                return;
+            }
+
+            let target;
+            try {
+                target = new URL(raw, location.href);
+            } catch (err) {
+                error("invalid destination airport, did you use iata or icao? (/silly, invalid url)")
+                return;
+            }
+
+            const origin = target.origin;
+            appMessage.innerHTML = `
+            you're about to be redirected to:
+            <div><strong>${escapeHtml(target.href)}</strong></div>
+            <div style="margin-top:8px">if you trust this link, click continue. if ya don't, click cancel.
+            `;
+
+            controls.style.display = "";
+
+            let countdown = 3;
+            let autoRedirectTimer = null;
+
+            proceedBtn.addEventListener("click", () => {
+                location.href = target.href;
+            });
+
+            cancelBtn.addEventListener("click", () => {
+                if (history.lenght > 1) history.back();
+                else location.href = "/";
+            });
+        })();
+    </script>
+</body>
+</html>
